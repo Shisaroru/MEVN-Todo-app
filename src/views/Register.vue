@@ -33,33 +33,26 @@
 }
 
 .input-field:focus {
-  outline: none;
+    outline: none;
 }
 
 .input-container {
-  width: 80%;
+    width: 80%;
 }
 
 #submit-button {
-  width: 80%;
-  color: white;
-  border-radius: 10px;
-  border: 1px solid white;
-  background-color: midnightblue;
-  padding: 10px 0;
-}
-
-.form-options {
-    display: flex;
     width: 80%;
-    gap: 10px;
-    font-size: 0.9em;
-    justify-content: space-between;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid white;
+    background-color: midnightblue;
+    padding: 10px 0;
 }
 
 .link {
     text-decoration: none;
 }
+
 .link:visited {
     color: blue;
 }
@@ -71,30 +64,26 @@
 
 <template>
     <div id="container">
-        <form class="form-container" @submit.prevent="login">
-            <h1>Todo App</h1>
+        <form class="form-container" @submit.prevent="register">
+            <h1>Register</h1>
+            <div class="input-container">
+                <label for="name">Name</label>
+                <input class="input-field" type="name" name="name" id="name" v-model="formInput.name" required>
+            </div>
             <div class="input-container">
                 <label for="email">Email</label>
                 <input class="input-field" type="email" name="email" id="email" v-model="formInput.email" required>
             </div>
             <div class="input-container">
                 <label for="password">Password</label>
-                <input class="input-field" type="password" name="password" id="password" v-model="formInput.password" required>
+                <input class="input-field" type="password" name="password" id="password" v-model="formInput.password"
+                    required minlength="6">
             </div>
-            <div class="form-options">
-                <div>
-                    <input type="checkbox" name="remember" id="remember" value="true"/>
-                    <label for="remember">Remember me</label>
-                </div>
-                <div>
-                    <a class="link" href="#">Forgot password?</a>
-                </div>
-            </div>
-            <button id="submit-button">Login</button>
-            <router-link :to="{ name: 'register'}" class="link">
-                Don't have an account yet? Register now
+            <button id="submit-button">Register</button>
+            <router-link :to="{ name: 'login' }" class="link">
+                Already have an account? Login now
             </router-link>
-            <div v-if="error" class="error">Login failed</div>
+            <div v-if="error" class="error">Register failed, check your information again</div>
         </form>
     </div>
 </template>
@@ -108,6 +97,7 @@ export default {
     data() {
         return {
             formInput: {
+                name: "",
                 email: "",
                 password: "",
             },
@@ -115,9 +105,10 @@ export default {
         }
     },
     methods: {
-        async login() {
+        async register() {
             try {
-                const result = await axios.post('/api/user/login', {
+                const result = await axios.post('/api/user/register', {
+                    name: this.formInput.name,
                     email: this.formInput.email,
                     password: this.formInput.password,
                 })

@@ -1,15 +1,60 @@
+<style scoped>
+.container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 10px;
+    min-height: 85vh;
+}
+
+.input-field {
+    padding: 5px 5px;
+    margin-left: 5px;
+    width: 40%;
+}
+
+#title {
+    text-align: center;
+}
+
+.picker {
+    display: flex;
+    width: 30%;
+}
+
+.submit {
+    width: 20%;
+    align-self: center;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: rgb(17, 186, 63);
+    color: white;
+}
+
+.text {
+    align-self: center;
+    font-size: 1.2em;
+}
+</style>
 <template>
     <AppHeader></AppHeader>
-    <h1>Add new work</h1>
-    <form @submit.prevent="createWork">
-        <label for="name">Work name</label>
-        <input type="text" name="name" id="name" v-model="formInput.name">
-        <label for="details">Description</label>
-        <input type="text" name="details" id="details" v-model="formInput.details">
-        <label for="expireDate">Expire Date</label>
-        <VueDatePicker v-model="formInput.date"></VueDatePicker>
-        <button>Create</button>
-        <div v-if="created">Created</div>
+    <h1 id="title">Add new work</h1>
+    <form class="container" @submit.prevent="createWork">
+        <div>
+            <label for="name">Work name</label>
+            <input type="text" name="name" id="name" v-model="formInput.name" required class="input-field">
+        </div>
+        <div>
+            <label for="details">Description</label>
+            <input type="text" name="details" id="details" v-model="formInput.details" required class="input-field">
+        </div>
+        <div class="picker">
+            <label for="expireDate">Expire Date</label>
+            <VueDatePicker v-model="formInput.date"></VueDatePicker>
+        </div>
+        <button class="submit">Create</button>
+        <div v-if="created" class="text">Created</div>
     </form>
 </template>
 
